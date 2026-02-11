@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGM-SP | Notícias da Procuradoria Geral do Município de São Paulo</title>
+    <meta name="description" content="Acompanhe as principais notícias e atualizações da Procuradoria Geral do Município de São Paulo (PGM-SP).">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --accent: #c53030;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --text-muted: #718096;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .featured {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .featured-content {
+            padding: 2rem;
+        }
+
+        .featured .category {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .featured h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .featured p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .news-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-card .category {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .category.precatorios { background: #e6fffa; color: #234e52; }
+        .category.concurso { background: #faf5ff; color: #553c9a; }
+        .category.cooperacao { background: #fef3c7; color: #92400e; }
+        .category.mototaxi { background: #fee2e2; color: #991b1b; }
+        .category.legislacao { background: #e0e7ff; color: #3730a3; }
+
+        .news-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .news-card .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .news-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .news-card a:hover {
+            text-decoration: underline;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        footer a {
+            color: white;
+            opacity: 0.8;
+        }
+
+        footer a:hover {
+            opacity: 1;
+        }
+
+        .links-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .links-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .links-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .links-list a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .links-list a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .featured h2 {
+                font-size: 1.35rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📜 PGM-SP Notícias</h1>
+        <p>Procuradoria Geral do Município de São Paulo</p>
+        <span class="badge">Atualizado em Fevereiro 2026</span>
+    </header>
+
+    <main>
+        <!-- Featured News -->
+        <article class="featured">
+            <div class="featured-content">
+                <span class="category">Destaque</span>
+                <h2>Prefeitura destina quase R$ 5 bilhões nos últimos 15 meses para pagamento de precatórios</h2>
+                <p>
+                    Desde o início de 2024, a Prefeitura de São Paulo destinou quase R$ 5 bilhões para o pagamento de precatórios — o maior valor já registrado na história da cidade. Em 2024, houve a destinação de R$ 3,71 bilhões, e para 2025, até março, já foram destinados R$ 1,17 bilhão, com previsão de alcançar mais de R$ 4,5 bilhões até o fim do ano.
+                </p>
+                <p>
+                    Além dos valores pagos diretamente, a Prefeitura tem realizado acordos em precatórios há mais de uma década. Entre 2018 e 2024, os acordos permitiram o pagamento de mais de R$ 6,1 bilhões, gerando uma economia superior a R$ 3,7 bilhões para os cofres públicos.
+                </p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value">R$ 5 bi</div>
+                        <div class="stat-label">Destinados (15 meses)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">R$ 3,7 bi</div>
+                        <div class="stat-label">Economia gerada</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2009</div>
+                        <div class="stat-label">Ano da fila atual</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">R$ 151 mil</div>
+                        <div class="stat-label">Crédito prioritário 2025</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- News Grid -->
+        <h2 class="section-title">Últimas Notícias</h2>
+        <div class="news-grid">
+            <!-- Card 1 -->
+            <article class="news-card">
+                <span class="category precatorios">Precatórios</span>
+                <h3>Novo edital para acordos em precatórios permite pagamento antecipado de até 80%</h3>
+                <p>
+                    O novo edital, com período de apresentação de propostas de 01/06/2025 a 31/08/2025, mantém as faixas de desconto do acordo anterior e permite pagamento imediato de 60% a 80% do valor atualizado.
+                </p>
+                <div class="meta">
+                    <span>Junho 2025</span>
+                    <a href="https://prefeitura.sp.gov.br/acordosprecatorios" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="news-card">
+                <span class="category cooperacao">Cooperação</span>
+                <h3>STF assina acordo de cooperação técnica com TJSP, PGE-SP e PGM-SP</h3>
+                <p>
+                    Parceria histórica busca agilizar processos judiciais, reduzir litígios e incentivar soluções consensuais. Com duração de dois anos, prorrogável por até 60 meses.
+                </p>
+                <div class="meta">
+                    <span>2025</span>
+                    <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="news-card">
+                <span class="category concurso">Concurso</span>
+                <h3>Concurso PGM-SP tem validade prorrogada até dezembro de 2027</h3>
+                <p>
+                    A Prefeitura publicou a nomeação de 89 aprovados no concurso da Procuradoria-Geral do Município de São Paulo. A validade foi estendida, ampliando as chances para os aprovados.
+                </p>
+                <div class="meta">
+                    <span>Dezembro 2025</span>
+                    <a href="https://cj.estrategia.com/portal/concurso-pgm-sp/" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="news-card">
+                <span class="category mototaxi">Mototáxi</span>
+                <h3>PGM recorre de decisão sobre mototáxis e pede mais 120 dias</h3>
+                <p>
+                    A Procuradoria Geral do Município recorreu ao Tribunal de Justiça de SP pedindo mais tempo para discussão da regulamentação do serviço de mototáxi na cidade.
+                </p>
+                <div class="meta">
+                    <span>Novembro 2025</span>
+                    <a href="https://agenciabrasil.ebc.com.br/geral/noticia/2025-11/prefeitura-de-sp-pede-mais-prazo-para-liberacao-de-mototaxis-na-cidade" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="news-card">
+                <span class="category legislacao">Legislação</span>
+                <h3>PGM avança na representação junto a servidores públicos</h3>
+                <p>
+                    Proposta que concede representação à PGM para tratar de ações judiciais sobre atos de agentes públicos durante o exercício da função recebeu parecer de legalidade na CCJ.
+                </p>
+                <div class="meta">
+                    <span>Agosto 2025</span>
+                    <a href="https://www.saopaulo.sp.leg.br/blog/atuacao-da-procuradoria-geral-do-municipio-junto-aos-servidores-publicos-da-capital-avanca-na-ccj/" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="news-card">
+                <span class="category legislacao">Legislação</span>
+                <h3>Nova portaria disciplina divulgação de ementas em matéria disciplinar</h3>
+                <p>
+                    A Portaria nº 206/2025-PGM/G estabelece novas regras para divulgação das ementas da Procuradoria Geral do Município em matéria disciplinar.
+                </p>
+                <div class="meta">
+                    <span>Janeiro 2026</span>
+                    <a href="https://www.sinesp.org.br/legislacao/saiu-no-doc-legislacao/23420-portaria-n-206-2025-pgm-g" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+
+            <!-- Card 7 -->
+            <article class="news-card">
+                <span class="category precatorios">Precatórios</span>
+                <h3>Prefeitura regulamenta compensação de débitos com precatórios</h3>
+                <p>
+                    Cidadãos com débitos em dívida ativa podem quitar até 92% do valor com precatórios, pagando apenas 8% em dinheiro através do novo programa.
+                </p>
+                <div class="meta">
+                    <span>2025</span>
+                    <a href="https://prefeitura.sp.gov.br/w/noticia/prefeitura-regulamenta-compensacao-de-debitos-da-divida-ativa-com-precatorios" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+
+            <!-- Card 8 -->
+            <article class="news-card">
+                <span class="category cooperacao">Cooperação</span>
+                <h3>PGM celebra acordo de "Execução Fiscal Eficiente"</h3>
+                <p>
+                    Procuradoria Geral do Município celebra acordo de cooperação técnica do projeto "Execução Fiscal Eficiente", promovido pelo Conselho Nacional de Justiça.
+                </p>
+                <div class="meta">
+                    <span>2025</span>
+                    <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">Saiba mais →</a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Links Section -->
+        <section class="links-section">
+            <h3>🔗 Links Úteis</h3>
+            <div class="links-list">
+                <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">
+                    🏛️ Portal PGM-SP
+                </a>
+                <a href="https://dividaativa.prefeitura.sp.gov.br/" target="_blank">
+                    💳 Dívida Ativa
+                </a>
+                <a href="https://prefeitura.sp.gov.br/acordosprecatorios" target="_blank">
+                    📋 Acordos em Precatórios
+                </a>
+                <a href="https://legislacao.prefeitura.sp.gov.br/" target="_blank">
+                    📜 Legislação Municipal
+                </a>
+                <a href="https://sp156.prefeitura.sp.gov.br/portal" target="_blank">
+                    📞 SP 156 - Atendimento
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Este site reúne informações públicas sobre a <strong>Procuradoria Geral do Município de São Paulo</strong>.
+        </p>
+        <p style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.9rem;">
+            Fonte oficial: <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">prefeitura.sp.gov.br</a>
+        </p>
+        <p style="margin-top: 1rem; opacity: 0.6; font-size: 0.8rem;">
+            Compilado automaticamente • Fevereiro 2026
+        </p>
+    </footer>
+</body>
+</html>
