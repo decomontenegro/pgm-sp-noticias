@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PGM-SP | Notícias da Procuradoria Geral do Município de São Paulo</title>
     <meta name="description" content="Acompanhe as principais notícias e atualizações da Procuradoria Geral do Município de São Paulo (PGM-SP).">
+    <meta name="theme-color" content="#1a365d">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,11 +14,28 @@
             --primary: #1a365d;
             --primary-light: #2c5282;
             --accent: #c53030;
+            --accent-light: #fc8181;
             --bg: #f7fafc;
             --card-bg: #ffffff;
             --text: #2d3748;
             --text-muted: #718096;
             --border: #e2e8f0;
+            --success: #38a169;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #90cdf4;
+            --primary-light: #63b3ed;
+            --bg: #1a202c;
+            --card-bg: #2d3748;
+            --text: #e2e8f0;
+            --text-muted: #a0aec0;
+            --border: #4a5568;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
 
         * {
@@ -26,79 +44,265 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            transition: var(--transition);
         }
 
+        /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
             color: white;
             padding: 2rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
         }
 
-        header h1 {
+        [data-theme="dark"] header {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
             font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
         }
 
-        header p {
-            opacity: 0.9;
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            text-align: left;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #9b2c2c;
+            transform: translateY(-2px);
+        }
+
+        /* Search Bar */
+        .search-section {
+            background: var(--card-bg);
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 80px;
+            z-index: 90;
+            transition: var(--transition);
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
             font-size: 1rem;
         }
 
-        .badge {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-top: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
+        .filter-tag {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
         main {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
 
-        .featured {
+        /* Stats Banner */
+        .stats-banner {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
             background: var(--card-bg);
             border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Featured */
+        .featured {
+            background: var(--card-bg);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-lg);
             margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .featured:hover {
+            transform: translateY(-4px);
+        }
+
+        .featured-header {
+            background: linear-gradient(135deg, var(--accent) 0%, #9b2c2c 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
         }
 
         .featured-content {
             padding: 2rem;
         }
 
-        .featured .category {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
         .featured h2 {
             font-size: 1.75rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--text);
             margin-bottom: 1rem;
             line-height: 1.3;
         }
@@ -106,68 +310,116 @@
         .featured p {
             color: var(--text-muted);
             font-size: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .featured .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
+        .featured-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
             margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border);
         }
 
-        .stat-item {
-            text-align: center;
+        /* Section Title */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .stat-value {
+        .section-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .stat-label {
-            font-size: 0.8rem;
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .news-count {
+            background: var(--bg);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
             color: var(--text-muted);
+            border: 1px solid var(--border);
         }
 
+        /* News Grid */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 1.5rem;
         }
 
         .news-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
             border: 1px solid var(--border);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: var(--transition);
         }
 
         .news-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .news-card:hover::before {
+            transform: scaleY(1);
         }
 
         .news-card .category {
             display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
             margin-bottom: 0.75rem;
+            letter-spacing: 0.5px;
         }
 
-        .category.precatorios { background: #e6fffa; color: #234e52; }
-        .category.concurso { background: #faf5ff; color: #553c9a; }
-        .category.cooperacao { background: #fef3c7; color: #92400e; }
-        .category.mototaxi { background: #fee2e2; color: #991b1b; }
-        .category.legislacao { background: #e0e7ff; color: #3730a3; }
+        .category.precatorios { background: #c6f6d5; color: #22543d; }
+        .category.concurso { background: #e9d8fd; color: #44337a; }
+        .category.cooperacao { background: #fef3c7; color: #744210; }
+        .category.mototaxi { background: #fed7d7; color: #822727; }
+        .category.legislacao { background: #c3dafe; color: #2a4365; }
+        .category.divida { background: #b2f5ea; color: #234e52; }
+
+        [data-theme="dark"] .category.precatorios { background: #276749; color: #c6f6d5; }
+        [data-theme="dark"] .category.concurso { background: #553c9a; color: #e9d8fd; }
+        [data-theme="dark"] .category.cooperacao { background: #744210; color: #fef3c7; }
+        [data-theme="dark"] .category.mototaxi { background: #822727; color: #fed7d7; }
+        [data-theme="dark"] .category.legislacao { background: #2a4365; color: #c3dafe; }
+        [data-theme="dark"] .category.divida { background: #234e52; color: #b2f5ea; }
 
         .news-card h3 {
             font-size: 1.1rem;
@@ -181,6 +433,14 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-card.expanded p {
+            -webkit-line-clamp: unset;
         }
 
         .news-card .meta {
@@ -189,119 +449,324 @@
             align-items: center;
             font-size: 0.8rem;
             color: var(--text-muted);
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
         }
 
-        .news-card a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .news-card a:hover {
-            text-decoration: underline;
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
+        .news-card .date {
             display: flex;
             align-items: center;
+            gap: 0.25rem;
+        }
+
+        .news-card .link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: var(--transition);
+        }
+
+        .news-card .link:hover {
             gap: 0.5rem;
         }
 
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 24px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        footer {
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 3rem;
-        }
-
-        footer a {
-            color: white;
-            opacity: 0.8;
-        }
-
-        footer a:hover {
-            opacity: 1;
-        }
-
+        /* Links Section */
         .links-section {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 16px;
+            padding: 2rem;
             margin-top: 2rem;
             border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
 
         .links-section h3 {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .links-list {
+            margin-bottom: 1.5rem;
+            color: var(--text);
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .links-list a {
-            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
             background: var(--bg);
-            border-radius: 8px;
+            border-radius: 12px;
             color: var(--text);
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: background 0.2s;
+            transition: var(--transition);
+            border: 1px solid var(--border);
         }
 
-        .links-list a:hover {
+        .link-card:hover {
             background: var(--primary);
             color: white;
+            transform: translateX(4px);
         }
 
+        .link-card .icon {
+            font-size: 1.5rem;
+        }
+
+        .link-card .info {
+            flex: 1;
+        }
+
+        .link-card .info strong {
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .link-card .info span {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 3rem;
+        }
+
+        [data-theme="dark"] footer {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        }
+
+        footer p {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .curator {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .curator-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .curator-title {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            background: var(--primary-light);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text);
+            color: var(--bg);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            transition: var(--transition);
+            opacity: 0;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .no-results .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .news-card {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .news-card:nth-child(1) { animation-delay: 0.1s; }
+        .news-card:nth-child(2) { animation-delay: 0.15s; }
+        .news-card:nth-child(3) { animation-delay: 0.2s; }
+        .news-card:nth-child(4) { animation-delay: 0.25s; }
+        .news-card:nth-child(5) { animation-delay: 0.3s; }
+        .news-card:nth-child(6) { animation-delay: 0.35s; }
+        .news-card:nth-child(7) { animation-delay: 0.4s; }
+        .news-card:nth-child(8) { animation-delay: 0.45s; }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.5rem;
+            .header-content {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .logo {
+                flex-direction: column;
+            }
+
+            .logo-text h1, .logo-text p {
+                text-align: center;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-banner {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .featured h2 {
                 font-size: 1.35rem;
             }
 
-            .news-grid {
-                grid-template-columns: 1fr;
+            .search-section {
+                position: relative;
+                top: 0;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>📜 PGM-SP Notícias</h1>
-        <p>Procuradoria Geral do Município de São Paulo</p>
-        <span class="badge">Atualizado em Fevereiro 2026</span>
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">⚖️</span>
+                <div class="logo-text">
+                    <h1>PGM-SP Notícias</h1>
+                    <p>Procuradoria Geral do Município</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-icon" onclick="toggleTheme()" title="Alternar tema" aria-label="Alternar tema">
+                    🌙
+                </button>
+                <button class="btn btn-icon" onclick="shareWebsite()" title="Compartilhar" aria-label="Compartilhar">
+                    📤
+                </button>
+                <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank" class="btn btn-primary">
+                    🏛️ Portal Oficial
+                </a>
+            </div>
+        </div>
     </header>
 
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar notícias..." oninput="filterNews()">
+            </div>
+            <div class="filter-tags">
+                <button class="filter-tag active" data-filter="todos" onclick="setFilter('todos')">Todos</button>
+                <button class="filter-tag" data-filter="precatorios" onclick="setFilter('precatorios')">Precatórios</button>
+                <button class="filter-tag" data-filter="concurso" onclick="setFilter('concurso')">Concurso</button>
+                <button class="filter-tag" data-filter="cooperacao" onclick="setFilter('cooperacao')">Cooperação</button>
+                <button class="filter-tag" data-filter="mototaxi" onclick="setFilter('mototaxi')">Mototáxi</button>
+                <button class="filter-tag" data-filter="legislacao" onclick="setFilter('legislacao')">Legislação</button>
+            </div>
+        </div>
+    </section>
+
     <main>
+        <!-- Stats Banner -->
+        <div class="stats-banner">
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value">R$ 5 bi</div>
+                <div class="stat-label">Precatórios (15 meses)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📉</div>
+                <div class="stat-value">R$ 3,7 bi</div>
+                <div class="stat-label">Economia gerada</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-value">2009</div>
+                <div class="stat-label">Ano da fila atual</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value">R$ 151 mil</div>
+                <div class="stat-label">Crédito prioritário</div>
+            </div>
+        </div>
+
         <!-- Featured News -->
-        <article class="featured">
+        <article class="featured" data-category="precatorios">
+            <div class="featured-header">
+                <span>🔥</span> Destaque
+            </div>
             <div class="featured-content">
-                <span class="category">Destaque</span>
                 <h2>Prefeitura destina quase R$ 5 bilhões nos últimos 15 meses para pagamento de precatórios</h2>
                 <p>
                     Desde o início de 2024, a Prefeitura de São Paulo destinou quase R$ 5 bilhões para o pagamento de precatórios — o maior valor já registrado na história da cidade. Em 2024, houve a destinação de R$ 3,71 bilhões, e para 2025, até março, já foram destinados R$ 1,17 bilhão, com previsão de alcançar mais de R$ 4,5 bilhões até o fim do ano.
@@ -309,153 +774,197 @@
                 <p>
                     Além dos valores pagos diretamente, a Prefeitura tem realizado acordos em precatórios há mais de uma década. Entre 2018 e 2024, os acordos permitiram o pagamento de mais de R$ 6,1 bilhões, gerando uma economia superior a R$ 3,7 bilhões para os cofres públicos.
                 </p>
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-value">R$ 5 bi</div>
-                        <div class="stat-label">Destinados (15 meses)</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">R$ 3,7 bi</div>
-                        <div class="stat-label">Economia gerada</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">2009</div>
-                        <div class="stat-label">Ano da fila atual</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">R$ 151 mil</div>
-                        <div class="stat-label">Crédito prioritário 2025</div>
-                    </div>
+                <div class="featured-actions">
+                    <a href="https://prefeitura.sp.gov.br/acordosprecatorios" target="_blank" class="btn btn-primary">
+                        📋 Ver acordos disponíveis
+                    </a>
+                    <button class="btn" style="background: var(--bg); color: var(--text);" onclick="shareNews('Precatórios SP')">
+                        📤 Compartilhar
+                    </button>
                 </div>
             </div>
         </article>
 
         <!-- News Grid -->
-        <h2 class="section-title">Últimas Notícias</h2>
-        <div class="news-grid">
+        <div class="section-header">
+            <h2 class="section-title">Últimas Notícias</h2>
+            <span class="news-count" id="newsCount">8 notícias</span>
+        </div>
+
+        <div class="news-grid" id="newsGrid">
             <!-- Card 1 -->
-            <article class="news-card">
+            <article class="news-card" data-category="precatorios" onclick="toggleCard(this)">
                 <span class="category precatorios">Precatórios</span>
                 <h3>Novo edital para acordos em precatórios permite pagamento antecipado de até 80%</h3>
                 <p>
-                    O novo edital, com período de apresentação de propostas de 01/06/2025 a 31/08/2025, mantém as faixas de desconto do acordo anterior e permite pagamento imediato de 60% a 80% do valor atualizado.
+                    O novo edital, com período de apresentação de propostas de 01/06/2025 a 31/08/2025, mantém as faixas de desconto do acordo anterior e permite pagamento imediato de 60% a 80% do valor atualizado. A apresentação das propostas deve ser feita eletronicamente por meio de advogado.
                 </p>
                 <div class="meta">
-                    <span>Junho 2025</span>
-                    <a href="https://prefeitura.sp.gov.br/acordosprecatorios" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 Junho 2025</span>
+                    <a href="https://prefeitura.sp.gov.br/acordosprecatorios" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
 
             <!-- Card 2 -->
-            <article class="news-card">
+            <article class="news-card" data-category="cooperacao" onclick="toggleCard(this)">
                 <span class="category cooperacao">Cooperação</span>
                 <h3>STF assina acordo de cooperação técnica com TJSP, PGE-SP e PGM-SP</h3>
                 <p>
-                    Parceria histórica busca agilizar processos judiciais, reduzir litígios e incentivar soluções consensuais. Com duração de dois anos, prorrogável por até 60 meses.
+                    Parceria histórica busca agilizar processos judiciais, reduzir litígios e incentivar soluções consensuais. Com duração de dois anos, prorrogável por até 60 meses, o acordo prevê compartilhamento de informações e criação de bancos de dados conjuntos.
                 </p>
                 <div class="meta">
-                    <span>2025</span>
-                    <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 2025</span>
+                    <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
 
             <!-- Card 3 -->
-            <article class="news-card">
+            <article class="news-card" data-category="concurso" onclick="toggleCard(this)">
                 <span class="category concurso">Concurso</span>
                 <h3>Concurso PGM-SP tem validade prorrogada até dezembro de 2027</h3>
                 <p>
-                    A Prefeitura publicou a nomeação de 89 aprovados no concurso da Procuradoria-Geral do Município de São Paulo. A validade foi estendida, ampliando as chances para os aprovados.
+                    A Prefeitura publicou a nomeação de 89 aprovados no concurso da Procuradoria-Geral do Município de São Paulo. A validade foi estendida, ampliando as chances para os aprovados ainda convocarem.
                 </p>
                 <div class="meta">
-                    <span>Dezembro 2025</span>
-                    <a href="https://cj.estrategia.com/portal/concurso-pgm-sp/" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 Dezembro 2025</span>
+                    <a href="https://cj.estrategia.com/portal/concurso-pgm-sp/" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
 
             <!-- Card 4 -->
-            <article class="news-card">
+            <article class="news-card" data-category="mototaxi" onclick="toggleCard(this)">
                 <span class="category mototaxi">Mototáxi</span>
                 <h3>PGM recorre de decisão sobre mototáxis e pede mais 120 dias</h3>
                 <p>
-                    A Procuradoria Geral do Município recorreu ao Tribunal de Justiça de SP pedindo mais tempo para discussão da regulamentação do serviço de mototáxi na cidade.
+                    A Procuradoria Geral do Município recorreu ao Tribunal de Justiça de SP pedindo mais tempo para discussão da regulamentação do serviço de mototáxi na cidade, estendendo a proibição até abril de 2026.
                 </p>
                 <div class="meta">
-                    <span>Novembro 2025</span>
-                    <a href="https://agenciabrasil.ebc.com.br/geral/noticia/2025-11/prefeitura-de-sp-pede-mais-prazo-para-liberacao-de-mototaxis-na-cidade" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 Novembro 2025</span>
+                    <a href="https://agenciabrasil.ebc.com.br/geral/noticia/2025-11/prefeitura-de-sp-pede-mais-prazo-para-liberacao-de-mototaxis-na-cidade" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
 
             <!-- Card 5 -->
-            <article class="news-card">
+            <article class="news-card" data-category="legislacao" onclick="toggleCard(this)">
                 <span class="category legislacao">Legislação</span>
                 <h3>PGM avança na representação junto a servidores públicos</h3>
                 <p>
-                    Proposta que concede representação à PGM para tratar de ações judiciais sobre atos de agentes públicos durante o exercício da função recebeu parecer de legalidade na CCJ.
+                    Proposta que concede representação à PGM para tratar de ações judiciais sobre atos de agentes públicos durante o exercício da função recebeu parecer de legalidade na CCJ da Câmara Municipal.
                 </p>
                 <div class="meta">
-                    <span>Agosto 2025</span>
-                    <a href="https://www.saopaulo.sp.leg.br/blog/atuacao-da-procuradoria-geral-do-municipio-junto-aos-servidores-publicos-da-capital-avanca-na-ccj/" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 Agosto 2025</span>
+                    <a href="https://www.saopaulo.sp.leg.br/blog/atuacao-da-procuradoria-geral-do-municipio-junto-aos-servidores-publicos-da-capital-avanca-na-ccj/" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
 
             <!-- Card 6 -->
-            <article class="news-card">
+            <article class="news-card" data-category="legislacao" onclick="toggleCard(this)">
                 <span class="category legislacao">Legislação</span>
                 <h3>Nova portaria disciplina divulgação de ementas em matéria disciplinar</h3>
                 <p>
-                    A Portaria nº 206/2025-PGM/G estabelece novas regras para divulgação das ementas da Procuradoria Geral do Município em matéria disciplinar.
+                    A Portaria nº 206/2025-PGM/G estabelece novas regras para divulgação das ementas da Procuradoria Geral do Município em matéria disciplinar, revogando a Portaria nº 33/09-SNJ.
                 </p>
                 <div class="meta">
-                    <span>Janeiro 2026</span>
-                    <a href="https://www.sinesp.org.br/legislacao/saiu-no-doc-legislacao/23420-portaria-n-206-2025-pgm-g" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 Janeiro 2026</span>
+                    <a href="https://www.sinesp.org.br/legislacao/saiu-no-doc-legislacao/23420-portaria-n-206-2025-pgm-g" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
 
             <!-- Card 7 -->
-            <article class="news-card">
+            <article class="news-card" data-category="precatorios" onclick="toggleCard(this)">
                 <span class="category precatorios">Precatórios</span>
                 <h3>Prefeitura regulamenta compensação de débitos com precatórios</h3>
                 <p>
-                    Cidadãos com débitos em dívida ativa podem quitar até 92% do valor com precatórios, pagando apenas 8% em dinheiro através do novo programa.
+                    Cidadãos com débitos em dívida ativa podem quitar até 92% do valor com precatórios, pagando apenas 8% em dinheiro através do Programa Especial de Quitação de Precatórios (PEQ).
                 </p>
                 <div class="meta">
-                    <span>2025</span>
-                    <a href="https://prefeitura.sp.gov.br/w/noticia/prefeitura-regulamenta-compensacao-de-debitos-da-divida-ativa-com-precatorios" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 2025</span>
+                    <a href="https://prefeitura.sp.gov.br/w/noticia/prefeitura-regulamenta-compensacao-de-debitos-da-divida-ativa-com-precatorios" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
 
             <!-- Card 8 -->
-            <article class="news-card">
+            <article class="news-card" data-category="cooperacao" onclick="toggleCard(this)">
                 <span class="category cooperacao">Cooperação</span>
                 <h3>PGM celebra acordo de "Execução Fiscal Eficiente"</h3>
                 <p>
-                    Procuradoria Geral do Município celebra acordo de cooperação técnica do projeto "Execução Fiscal Eficiente", promovido pelo Conselho Nacional de Justiça.
+                    Procuradoria Geral do Município celebra acordo de cooperação técnica do projeto "Execução Fiscal Eficiente", promovido pelo Conselho Nacional de Justiça para modernizar cobranças.
                 </p>
                 <div class="meta">
-                    <span>2025</span>
-                    <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">Saiba mais →</a>
+                    <span class="date">📅 2025</span>
+                    <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank" class="link" onclick="event.stopPropagation()">
+                        Acessar <span>→</span>
+                    </a>
                 </div>
             </article>
+        </div>
+
+        <!-- No Results -->
+        <div class="no-results" id="noResults" style="display: none;">
+            <div class="icon">🔍</div>
+            <h3>Nenhuma notícia encontrada</h3>
+            <p>Tente buscar por outro termo ou limpe os filtros.</p>
         </div>
 
         <!-- Links Section -->
         <section class="links-section">
             <h3>🔗 Links Úteis</h3>
-            <div class="links-list">
-                <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">
-                    🏛️ Portal PGM-SP
+            <div class="links-grid">
+                <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank" class="link-card">
+                    <span class="icon">🏛️</span>
+                    <div class="info">
+                        <strong>Portal PGM-SP</strong>
+                        <span>Site oficial da Procuradoria</span>
+                    </div>
                 </a>
-                <a href="https://dividaativa.prefeitura.sp.gov.br/" target="_blank">
-                    💳 Dívida Ativa
+                <a href="https://dividaativa.prefeitura.sp.gov.br/" target="_blank" class="link-card">
+                    <span class="icon">💳</span>
+                    <div class="info">
+                        <strong>Dívida Ativa</strong>
+                        <span>Consulte e negocie débitos</span>
+                    </div>
                 </a>
-                <a href="https://prefeitura.sp.gov.br/acordosprecatorios" target="_blank">
-                    📋 Acordos em Precatórios
+                <a href="https://prefeitura.sp.gov.br/acordosprecatorios" target="_blank" class="link-card">
+                    <span class="icon">📋</span>
+                    <div class="info">
+                        <strong>Acordos Precatórios</strong>
+                        <span>Editais e propostas</span>
+                    </div>
                 </a>
-                <a href="https://legislacao.prefeitura.sp.gov.br/" target="_blank">
-                    📜 Legislação Municipal
+                <a href="https://legislacao.prefeitura.sp.gov.br/" target="_blank" class="link-card">
+                    <span class="icon">📜</span>
+                    <div class="info">
+                        <strong>Legislação</strong>
+                        <span>Leis e portarias municipais</span>
+                    </div>
                 </a>
-                <a href="https://sp156.prefeitura.sp.gov.br/portal" target="_blank">
-                    📞 SP 156 - Atendimento
+                <a href="https://sp156.prefeitura.sp.gov.br/portal" target="_blank" class="link-card">
+                    <span class="icon">📞</span>
+                    <div class="info">
+                        <strong>SP 156</strong>
+                        <span>Central de atendimento</span>
+                    </div>
+                </a>
+                <a href="http://biblioteca-pgm.prefeitura.sp.gov.br/" target="_blank" class="link-card">
+                    <span class="icon">📚</span>
+                    <div class="info">
+                        <strong>Biblioteca Digital</strong>
+                        <span>Pareceres e artigos</span>
+                    </div>
                 </a>
             </div>
         </section>
@@ -464,16 +973,151 @@
     <footer>
         <p>
             Este site reúne informações públicas sobre a <strong>Procuradoria Geral do Município de São Paulo</strong>.
+            Fonte oficial: <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank" style="color: white;">prefeitura.sp.gov.br</a>
         </p>
-        <p style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.9rem;">
-            Fonte oficial: <a href="https://prefeitura.sp.gov.br/web/procuradoria_geral" target="_blank">prefeitura.sp.gov.br</a>
-        </p>
-        <p style="margin-top: 1rem; opacity: 0.6; font-size: 0.8rem;">
-            Compilado automaticamente • Fevereiro 2026
-        </p>
-        <p style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.9rem;">
-            Curadoria: <strong>Paulo André</strong> — Procurador do Município de São Paulo
+        <div class="curator">
+            <div class="curator-name">Paulo André</div>
+            <div class="curator-title">Procurador do Município de São Paulo</div>
+        </div>
+        <p style="margin-top: 1.5rem; opacity: 0.6; font-size: 0.8rem;">
+            Atualizado em Fevereiro 2026
         </p>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Voltar ao topo">
+        ↑
+    </button>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            showToast(isDark ? '☀️ Modo claro ativado' : '🌙 Modo escuro ativado');
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+
+        // Current filter
+        let currentFilter = 'todos';
+
+        // Filter News
+        function setFilter(filter) {
+            currentFilter = filter;
+            
+            // Update active tag
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+                if (tag.getAttribute('data-filter') === filter) {
+                    tag.classList.add('active');
+                }
+            });
+
+            filterNews();
+        }
+
+        function filterNews() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.news-card');
+            const featured = document.querySelector('.featured');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const category = card.getAttribute('data-category');
+                const text = card.textContent.toLowerCase();
+                const matchesFilter = currentFilter === 'todos' || category === currentFilter;
+                const matchesSearch = text.includes(searchTerm);
+
+                if (matchesFilter && matchesSearch) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Handle featured article
+            if (featured) {
+                const featuredCategory = featured.getAttribute('data-category');
+                const featuredText = featured.textContent.toLowerCase();
+                const matchesFilter = currentFilter === 'todos' || featuredCategory === currentFilter;
+                const matchesSearch = featuredText.includes(searchTerm);
+                featured.style.display = (matchesFilter && matchesSearch) ? 'block' : 'none';
+                if (matchesFilter && matchesSearch) visibleCount++;
+            }
+
+            // Update count
+            document.getElementById('newsCount').textContent = `${visibleCount} notícia${visibleCount !== 1 ? 's' : ''}`;
+
+            // Show/hide no results
+            document.getElementById('noResults').style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // Toggle Card Expansion
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+        }
+
+        // Share
+        function shareWebsite() {
+            const url = window.location.href;
+            const title = 'PGM-SP Notícias';
+            
+            if (navigator.share) {
+                navigator.share({ title, url });
+            } else {
+                navigator.clipboard.writeText(url);
+                showToast('📋 Link copiado!');
+            }
+        }
+
+        function shareNews(title) {
+            const url = window.location.href;
+            
+            if (navigator.share) {
+                navigator.share({ title, url });
+            } else {
+                navigator.clipboard.writeText(`${title} - ${url}`);
+                showToast('📋 Link copiado!');
+            }
+        }
+
+        // Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Back to Top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+    </script>
 </body>
 </html>
